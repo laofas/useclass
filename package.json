@@ -1,9 +1,12 @@
 {
   "name": "useclass",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Develop Vue 3 based applications using a composable native class API",
-  "main": "index.js",
-  "scripts": {},
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shixianqin/useclass.git"
+  },
   "keywords": [
     "use-class",
     "vue3-class",
@@ -12,6 +15,10 @@
   ],
   "author": "shixianqin",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shixianqin/useclass/issues"
+  },
+  "homepage": "https://github.com/shixianqin/useclass#readme",
   "devDependencies": {
     "vue": "^3.2.39"
   }
