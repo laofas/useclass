@@ -1,8 +1,12 @@
 {
   "name": "useclass",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Develop Vue 3 based applications using a composable native class API",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shixianqin/useclass.git"

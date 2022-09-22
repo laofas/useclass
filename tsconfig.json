@@ -4,7 +4,9 @@
     "target": "esnext",
     "sourceMap": false,
     "strict": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "declaration": true,
+    "outDir": "dist",
   },
   "exclude": [
     "node_modules"
