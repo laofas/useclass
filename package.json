@@ -1,7 +1,7 @@
 {
   "name": "useclass",
-  "version": "0.0.1",
-  "description": "使用组合式的原生类语法来开发基于 Vue3 的应用程序",
+  "version": "0.0.2",
+  "description": "Develop Vue 3 based applications using a composable native class API",
   "main": "index.js",
   "scripts": {},
   "keywords": [
