@@ -10,8 +10,6 @@
 
 + 更清晰、更聚合、更灵活的代码组织能力
 + 天然的逻辑代码命名空间
-+ 不依赖 ES 装饰器
-+ 没有黑魔法
 + 没有 `.value`
 
 ## 安装
@@ -51,13 +49,13 @@ const main = useClass(class {
   // 响应性数据
   count = 0
 
-  constructor () {
-    // 构造内使用 watch
+  setup () {
+    // 作用域内使用 watch
     watch(() => this.count, () => {
       console.log('count was changed')
     })
 
-    // 构造内使用组件生命周期钩子
+    // 作用域内使用组件生命周期钩子
     onMounted(() => {
       console.log('mounted')
     })

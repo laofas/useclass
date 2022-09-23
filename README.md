@@ -9,8 +9,6 @@ English | [简体中文](https://github.com/shixianqin/useclass/blob/main/README
 
 + Clearer, more aggregated, and more flexible code organization capabilities
 + Natural logical code namespace
-+ Does not rely on ES decorators
-+ No black magic
 + No `.value`
 
 ## Installation
@@ -50,13 +48,13 @@ const main = useClass(class {
   // reactivity data
   count = 0
 
-  constructor () {
-    // Use watch inside the constructor
+  setup () {
+    // Use watch in scope
     watch(() => this.count, () => {
       console.log('count was changed')
     })
 
-    // Use component lifecycle hooks inside the constructor
+    // Scoped use of component lifecycle hooks
     onMounted(() => {
       console.log('mounted')
     })

@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue'
 
-export function useClass<T extends object> (Class: new () => T): T {
+export function useClass<T extends object> (Class: new () => T & { setup? (): void }): T {
   const descriptors = Object.getOwnPropertyDescriptors(Class.prototype)
   const instance = reactive(new Class())
 
@@ -24,6 +24,10 @@ export function useClass<T extends object> (Class: new () => T): T {
 
       Object.defineProperty(instance, key, attrs)
     }
+  }
+
+  if (typeof instance.setup === 'function') {
+    instance.setup()
   }
 
   return instance as T

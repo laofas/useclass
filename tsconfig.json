@@ -6,9 +6,12 @@
     "strict": true,
     "moduleResolution": "Node",
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "dist"
   },
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    "index.ts"
   ]
 }
