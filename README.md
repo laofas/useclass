@@ -80,16 +80,33 @@ const main = useClass(class {
 </script>
 ```
 
-## Precautions
+## ⚠️ Precautions
 
-In the `constructor` method of the class, only default values can be set on the instance, no other operations are allowed, because the `this` at this time
+### template
+
+When binding events in templates, functions cannot omit `()`, which will cause `this` to point to an error
+
+```vue
+
+<!-- Error demonstration, the point of `this` will be wrong -->
+<button @click="main.increase">increase</button>
+
+<!-- Correct demonstration -->
+<button @click="main.increase()">increase</button>
+```
+
+### constructor
+
+In the `constructor` method of the class, only default values can be set on the instance, no other operations are
+allowed, because the `this` at this time
 Not a proxy object, not reactive. The initialization logic should be moved to the `setup` method
 
 ```ts
+
 import { watch, onMounted } from '@vue'
 import { useClass } from 'useclass'
 
-useClass(class {
+const main = useClass(class {
   count = 0
   name: string
 
@@ -101,23 +118,23 @@ useClass(class {
      * Error demonstration
      */
     // Not allowed
-    this.myInit();
+    this.myMethod();
 
-    // Not allowed, this non-response object, watch will never fire, please move to the step method
+    // Not allowed, `this` is not a proxy object, watch will never fire, please move to the `setup` method
     watch(() => this.count, () => {})
 
-    // Not allowed, this is not a response object, the view will not refresh, please move to the step method
+    // Not allowed, `this` is not a proxy object, the view will not refresh, please move to the `setup` method
     onMounted(() => {
       this.count++
     })
   }
 
-  // setup method will be called automatically inside useClass
+  // `setup` method will be called automatically inside `useClass`
   setup () {
     /**
-     * correct demonstration
+     * Correct demonstration
      */
-    this.myInit();
+    this.myMethod();
 
     watch(() => this.count, () => {})
 
@@ -126,8 +143,8 @@ useClass(class {
     })
   }
 
-  myInit () {
-    // custom initialization method
+  myMethod () {
+    // custom method
   }
 })
 ```

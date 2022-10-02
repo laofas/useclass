@@ -81,7 +81,22 @@ const main = useClass(class {
 </script>
 ```
 
-## 注意事项
+## ⚠️ 注意事项
+
+### template
+
+在模版中绑定事件时，函数不可以省略`()`，那将导致 `this` 的指向错误
+
+```vue
+
+<!-- 错误示范, this 的指向会错误 -->
+<button @click="main.increase">increase</button>
+
+<!-- 正确示范 -->
+<button @click="main.increase()">increase</button>
+```
+
+### constructor
 
 在类的 `constructor` 方法中仅可对实例设置默认值，不允许其他操作，因为此时的 `this`
 并非代理对象，不具有响应性。初始化逻辑应转移到 `setup` 方法中
@@ -102,12 +117,12 @@ useClass(class {
      * 错误示范
      */
     // 不允许
-    this.myInit();
-    
-    // 不允许，this 非响应对象，watch 永远不会触发，请转移到 steup 方法
+    this.myMethod();
+
+    // 不允许，this 非响应对象，watch 永远不会触发，请转移到 setup 方法
     watch(() => this.count, () => {})
 
-    // 不允许，this 非响应对象，视图不会刷新，请转移到 steup 方法
+    // 不允许，this 非响应对象，视图不会刷新，请转移到 setup 方法
     onMounted(() => {
       this.count++
     })
@@ -118,8 +133,8 @@ useClass(class {
     /**
      * 正确示范
      */
-    this.myInit();
-    
+    this.myMethod();
+
     watch(() => this.count, () => {})
 
     onMounted(() => {
@@ -127,8 +142,8 @@ useClass(class {
     })
   }
 
-  myInit () {
-    // 自定义初始化方法
+  myMethod () {
+    // 自定义方法
   }
 })
 ```
