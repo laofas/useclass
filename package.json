@@ -1,6 +1,6 @@
 {
   "name": "useclass",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Develop Vue 3 based applications using a composable native class API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
