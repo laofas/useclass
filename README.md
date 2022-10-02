@@ -80,6 +80,58 @@ const main = useClass(class {
 </script>
 ```
 
+## Precautions
+
+In the `constructor` method of the class, only default values can be set on the instance, no other operations are allowed, because the `this` at this time
+Not a proxy object, not reactive. The initialization logic should be moved to the `setup` method
+
+```ts
+import { watch, onMounted } from '@vue'
+import { useClass } from 'useclass'
+
+useClass(class {
+  count = 0
+  name: string
+
+  constructor () {
+    // Allowed, default value can be set on the instance
+    this.name = 'i am the default'
+
+    /**
+     * Error demonstration
+     */
+    // Not allowed
+    this.myInit();
+
+    // Not allowed, this non-response object, watch will never fire, please move to the step method
+    watch(() => this.count, () => {})
+
+    // Not allowed, this is not a response object, the view will not refresh, please move to the step method
+    onMounted(() => {
+      this.count++
+    })
+  }
+
+  // setup method will be called automatically inside useClass
+  setup () {
+    /**
+     * correct demonstration
+     */
+    this.myInit();
+
+    watch(() => this.count, () => {})
+
+    onMounted(() => {
+      this.count++
+    })
+  }
+
+  myInit () {
+    // custom initialization method
+  }
+})
+```
+
 ## Vue.js official related documentation reference
 
 + [Composition API FAQ](https://vuejs.org/guide/extras/composition-api-faq.html)
