@@ -1,31 +1,27 @@
 import { computed, reactive } from 'vue'
 
-export function useClass<T extends object> (Class: new () => T & { setup? (): void }): T {
+interface Base {
+  setup? (): void
+}
+
+export function useClass<T extends object> (Class: new () => T & Base): T {
   const descriptors = Object.getOwnPropertyDescriptors(Class.prototype)
   const instance = reactive(new Class())
 
   for (const key in descriptors) {
-    const { get, set } = descriptors[key]
+    const { get } = descriptors[key]
 
-    if (get || set) {
-      const attrs: PropertyDescriptor = {
-        configurable: true,
-      }
+    // init computed
+    if (get) {
+      const c = computed(get.bind(instance))
 
-      if (get) {
-        const c = computed(get.bind(instance))
-
-        attrs.get = () => c.value
-      }
-
-      if (set) {
-        attrs.set = set.bind(instance)
-      }
-
-      Object.defineProperty(instance, key, attrs)
+      Object.defineProperty(instance, key, {
+        get: () => c.value
+      })
     }
   }
 
+  // Once the instance is created, call the Setup hook
   if (typeof instance.setup === 'function') {
     instance.setup()
   }
