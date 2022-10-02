@@ -89,10 +89,10 @@ const main = useClass(class {
 
 ```vue
 
-<!-- 错误示范, this 的作用域不正确 -->
+<!-- ❌ 错误示例, this 的作用域不正确 -->
 <button @click="main.increase">increase</button>
 
-<!-- 正确示范 -->
+<!-- ✅ 正确示例 -->
 <button @click="main.increase()">increase</button>
 ```
 
@@ -105,24 +105,24 @@ const main = useClass(class {
 import { watch, onMounted } from '@vue'
 import { useClass } from 'useclass'
 
-useClass(class {
+const main = useClass(class {
   count = 0
   name: string
 
   constructor () {
-    // 允许，可对实例设置默认值
+    // ✅ 允许，可对实例设置默认值
     this.name = '我是默认值'
 
     /**
-     * 错误示范
+     * 错误示例
      */
-    // 不允许
+    // ❌ 不允许
     this.myMethod();
 
-    // 不允许，this 非响应对象，watch 永远不会触发，请转移到 setup 方法
+    // ❌ 不允许，this 非响应对象，watch 永远不会触发，请转移到 setup 方法
     watch(() => this.count, () => {})
 
-    // 不允许，this 非响应对象，视图不会刷新，请转移到 setup 方法
+    // ❌ 不允许，this 非响应对象，视图不会刷新，请转移到 setup 方法
     onMounted(() => {
       this.count++
     })
@@ -131,12 +131,15 @@ useClass(class {
   // setup 方法会在 useClass 内自动调用
   setup () {
     /**
-     * 正确示范
+     * 正确示例
      */
+    // ✅ 允许
     this.myMethod();
 
+    // ✅ 允许
     watch(() => this.count, () => {})
 
+    // ✅ 允许
     onMounted(() => {
       this.count++
     })

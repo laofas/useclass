@@ -88,10 +88,10 @@ When binding events in the template, the function cannot omit `()`, which will c
 
 ```vue
 
-<!-- Error example, the scope of `this` is incorrect -->
+<!-- ❌ Error example, the scope of `this` is incorrect -->
 <button @click="main.increase">increase</button>
 
-<!-- Correct demonstration -->
+<!-- ✅ Correct example -->
 <button @click="main.increase()">increase</button>
 ```
 
@@ -111,19 +111,19 @@ const main = useClass(class {
   name: string
 
   constructor () {
-    // Allowed, default value can be set on the instance
+    // ✅ Allowed, default value can be set on the instance
     this.name = 'i am the default'
 
     /**
-     * Error demonstration
+     * Error example
      */
-    // Not allowed
+    // ❌ Not allowed
     this.myMethod();
 
-    // Not allowed, `this` is not a proxy object, watch will never fire, please move to the `setup` method
+    // ❌ Not allowed, `this` is not a proxy object, watch will never fire, please move to the `setup` method
     watch(() => this.count, () => {})
 
-    // Not allowed, `this` is not a proxy object, the view will not refresh, please move to the `setup` method
+    // ❌ Not allowed, `this` is not a proxy object, the view will not refresh, please move to the `setup` method
     onMounted(() => {
       this.count++
     })
@@ -132,12 +132,15 @@ const main = useClass(class {
   // `setup` method will be called automatically inside `useClass`
   setup () {
     /**
-     * Correct demonstration
+     * Correct example
      */
+    // ✅ Allowed
     this.myMethod();
 
+    // ✅ Allowed
     watch(() => this.count, () => {})
 
+    // ✅ Allowed
     onMounted(() => {
       this.count++
     })
