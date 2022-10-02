@@ -85,11 +85,11 @@ const main = useClass(class {
 
 ### template
 
-在模版中绑定事件时，函数不可以省略`()`，那将导致 `this` 的指向错误
+在模版中绑定事件时，函数不可以省略`()`，那将导致 `this` 的作用域不正确
 
 ```vue
 
-<!-- 错误示范, this 的指向会错误 -->
+<!-- 错误示范, this 的作用域不正确 -->
 <button @click="main.increase">increase</button>
 
 <!-- 正确示范 -->

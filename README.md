@@ -84,11 +84,11 @@ const main = useClass(class {
 
 ### template
 
-When binding events in templates, functions cannot omit `()`, which will cause `this` to point to an error
+When binding events in the template, the function cannot omit `()`, which will cause the scope of `this` to be incorrect
 
 ```vue
 
-<!-- Error demonstration, the point of `this` will be wrong -->
+<!-- Error example, the scope of `this` is incorrect -->
 <button @click="main.increase">increase</button>
 
 <!-- Correct demonstration -->
