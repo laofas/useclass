@@ -9,13 +9,14 @@ export function useClass<T extends object> (Class: new () => T & Base): T {
   const instance = reactive(new Class())
 
   for (const key in descriptors) {
-    const { get } = descriptors[key]
+    const { get, set } = descriptors[key]
 
     // init computed
     if (get) {
       const c = computed(get.bind(instance))
 
       Object.defineProperty(instance, key, {
+        set,
         get: () => c.value
       })
     }
